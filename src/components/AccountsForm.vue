@@ -1,27 +1,15 @@
 <script lang="ts" setup>
-import z from 'zod'
 import { onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import Toolbar from 'primevue/toolbar'
 import Button from 'primevue/button'
 
-import { accountSchema } from '@/model/account'
 import { useAccountsStore } from '@/stores/accounts'
 
 import AccountsFormRow from './AccountsFormRow.vue'
 
-const formSchema = z.array(accountSchema)
-
 const accountsStore = useAccountsStore()
 const { accounts } = storeToRefs(accountsStore)
-
-function submit() {
-  const res = formSchema.safeParse(accounts.value)
-  if (!res.success) {
-    console.error("Couln't save invalid data", res.error)
-    return
-  }
-}
 
 onMounted(() => {
   accountsStore.loadFromStorage()
@@ -59,7 +47,6 @@ onMounted(() => {
       :data="acc"
       @update:data="accounts[idx] = $event"
       @remove="accountsStore.removeAccount(idx)"
-      @blur="submit"
     />
   </div>
 </template>

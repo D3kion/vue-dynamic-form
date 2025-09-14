@@ -21,4 +21,6 @@ export const accountSchema = z
     { path: ['password'] },
   )
 
+export const accountsFormSchema = z.array(accountSchema)
+
 export type Account = z.infer<typeof accountSchema>

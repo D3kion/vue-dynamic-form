@@ -82,12 +82,16 @@ function onTypeChange(e: SelectChangeEvent) {
     fluid
     @blur="validate"
   />
-  <Button icon="pi pi-trash" size="large" text @click="emit('remove')" />
+  <Button class="delete-btn" icon="pi pi-trash" size="large" text @click="emit('remove')" />
   <hr />
 </template>
 
 <style scoped>
-.p-button {
+hr {
+  margin-bottom: 0.75rem;
+}
+
+.p-button.delete-btn {
   width: 100%;
 }
 

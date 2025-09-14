@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 
-import { accountSchema, type Account } from '@/model/account'
+import { accountSchema, accountsFormSchema, type Account } from '@/model/account'
 
 const LOCAL_STORAGE_KEY = 'saved-accounts'
 
@@ -33,6 +33,11 @@ export const useAccountsStore = defineStore('accounts', () => {
   }
 
   function saveToStorage() {
+    const res = accountsFormSchema.safeParse(accounts.value)
+    if (!res.success) {
+      console.error("Couln't save invalid data", res.error)
+      return
+    }
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(accounts.value))
     } catch (error) {
